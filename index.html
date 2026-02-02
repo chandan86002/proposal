@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asha Patel 💖</title>
+
+  <style>
+    :root{
+      --bg1:#fff0f6;
+      --bg2:#ffe4f1;
+      --card:#ffffffcc;
+      --text:#1f2937;
+      --pink:#ff4d8d;
+      --pink2:#ff78a6;
+      --shadow: 0 20px 60px rgba(0,0,0,.14);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      overflow:hidden;
+      background: radial-gradient(1000px 700px at 20% 10%, var(--bg2), transparent 60%),
+                  radial-gradient(900px 650px at 90% 20%, #ffd1e6, transparent 55%),
+                  linear-gradient(180deg, var(--bg1), #ffffff);
+    }
+
+    /* ---------- Floating hearts layer ---------- */
+    .hearts{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:0;
+    }
+    .heart{
+      position:absolute;
+      bottom:-40px;
+      font-size:18px;
+      opacity:.85;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.12));
+      animation: floatUp linear forwards;
+      will-change: transform, opacity;
+    }
+    @keyframes floatUp{
+      0%   { transform: translateY(0) translateX(0) scale(1) rotate(0deg); opacity:0; }
+      10%  { opacity:.85; }
+      100% { transform: translateY(-120vh) translateX(var(--drift)) scale(var(--scale)) rotate(var(--rot)); opacity:0; }
+    }
+
+    /* ---------- Main layout ---------- */
+    .wrap{
+      position:relative;
+      z-index:1;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+
+    .card{
+      width:min(920px, 94vw);
+      background:var(--card);
+      backdrop-filter: blur(12px);
+      border:1px solid rgba(255,255,255,.6);
+      border-radius:26px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+    }
+
+    .left{
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      position:relative;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255, 77, 141, .12);
+      color: #b4236a;
+      font-weight:600;
+      font-size:14px;
+    }
+    .title{
+      font-size: clamp(28px, 3.5vw, 44px);
+      line-height:1.05;
+      letter-spacing:-.02em;
+    }
+    .subtitle{
+      font-size: clamp(14px, 1.6vw, 18px);
+      opacity:.85;
+      line-height:1.5;
+      max-width: 52ch;
+    }
+
+    .btnRow{
+      margin-top:10px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn{
+      border:none;
+      cursor:pointer;
+      padding:14px 18px;
+      border-radius:14px;
+      font-weight:700;
+      font-size:16px;
+      transition: transform .12s ease, box-shadow .12s ease, background .2s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active{ transform: scale(.98); }
+
+    .yes{
+      background: linear-gradient(135deg, var(--pink), var(--pink2));
+      color:white;
+      box-shadow: 0 14px 28px rgba(255, 77, 141, .35);
+    }
+    .yes:hover{ transform: translateY(-2px); }
+
+    /* No button runs away (we position it absolutely inside a playground) */
+    .playground{
+      position:relative;
+      margin-top:6px;
+      padding:18px 6px 6px;
+      border-radius:18px;
+      background: rgba(255,255,255,.55);
+      border: 1px dashed rgba(255, 77, 141, .25);
+      min-height: 92px;
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:12px;
+      overflow:hidden;
+    }
+
+    .no{
+      background: rgba(17, 24, 39, .08);
+      color:#111827;
+      box-shadow: 0 10px 22px rgba(0,0,0,.10);
+      position:absolute; /* important for moving */
+      left: 170px;       /* initial */
+      top: 18px;
+    }
+    .no:hover{ transform: translateY(-1px); }
+
+    /* Right side photo */
+    .right{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:22px;
+      background: radial-gradient(600px 400px at 70% 20%, rgba(255,77,141,.22), transparent 60%),
+                  radial-gradient(600px 400px at 30% 90%, rgba(255,140,180,.18), transparent 60%),
+                  linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.25));
+    }
+
+    .photoWrap{
+      width:min(320px, 70vw);
+      aspect-ratio: 1/1;
+      border-radius: 26px;
+      overflow:hidden;
+      position:relative;
+      border: 1px solid rgba(255,255,255,.7);
+      box-shadow: 0 18px 50px rgba(0,0,0,.12);
+      background: rgba(255,255,255,.55);
+    }
+    .photoWrap img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .photoGlow{
+      position:absolute;
+      inset:-40px;
+      background: radial-gradient(circle at 30% 20%, rgba(255,77,141,.35), transparent 60%),
+                  radial-gradient(circle at 70% 80%, rgba(255,140,180,.28), transparent 60%);
+      filter: blur(18px);
+      z-index:-1;
+    }
+    .hint{
+      margin-top:12px;
+      font-size:13px;
+      opacity:.75;
+    }
+
+    /* ---------- "Second page" (same file) ---------- */
+    .page{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:5;
+      background: radial-gradient(900px 600px at 20% 10%, #ffe0ef, transparent 60%),
+                  radial-gradient(900px 600px at 90% 20%, #ffd1e6, transparent 60%),
+                  linear-gradient(180deg, #fff0f6, #ffffff);
+    }
+    .page.show{ display:flex; }
+
+    .messageCard{
+      width:min(860px, 94vw);
+      background: rgba(255,255,255,.80);
+      border:1px solid rgba(255,255,255,.7);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:28px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .big{
+      font-size: clamp(30px, 4vw, 54px);
+      letter-spacing:-.02em;
+      margin-bottom:10px;
+    }
+    .msg{
+      font-size: clamp(15px, 1.6vw, 19px);
+      line-height:1.6;
+      opacity:.9;
+      max-width: 60ch;
+      margin: 0 auto;
+    }
+
+    .backBtn{
+      margin-top:18px;
+      background: rgba(17,24,39,.08);
+      color:#111827;
+      box-shadow: 0 10px 22px rgba(0,0,0,.10);
+    }
+
+    .sparkle{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.65;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(255,77,141,.25), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(255,140,180,.22), transparent 28%),
+        radial-gradient(circle at 25% 80%, rgba(255,77,141,.18), transparent 32%),
+        radial-gradient(circle at 75% 80%, rgba(255,140,180,.18), transparent 32%);
+      filter: blur(1px);
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px){
+      .card{ grid-template-columns: 1fr; }
+      .right{ padding:18px; }
+      .playground{ min-height: 100px; }
+      .no{ left: 160px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Hearts background -->
+  <div class="hearts" id="heartsLayer"></div>
+
+  <!-- First screen -->
+  <main class="wrap" id="mainScreen">
+    <section class="card">
+      <div class="left">
+        <div class="tag">💖 For Asha Patel</div>
+
+        <h1 class="title">Will you marry me? 💍</h1>
+        <p class="subtitle">
+          Every day feels better with you. I want to spend my whole life making you smile.
+        </p>
+
+        <div class="btnRow">
+          <button class="btn yes" id="yesBtn">Yes ✅</button>
+        </div>
+
+        <div class="playground" id="playground">
+          <!-- No button sits inside this container and runs away -->
+          <button class="btn no" id="noBtn">No 🙈</button>
+        </div>
+
+        <div class="hint">Tip: On mobile, try to tap “No” 😄</div>
+      </div>
+
+      <div class="right">
+        <div class="photoGlow"></div>
+
+        <div class="photoWrap">
+          <!-- ✅ Replace the image link below with her photo -->
+          <img
+            id="herPhoto"
+            src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
+            alt="Asha Photo"
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Second screen (same HTML file) -->
+  <section class="page" id="yesPage" aria-hidden="true">
+    <div class="messageCard">
+      <div class="sparkle"></div>
+      <h2 class="big">Yay!!! 💞</h2>
+      <p class="msg">
+        Asha, you just made me the happiest person alive. <br><br>
+        I promise to respect you, support your dreams, and love you more every single day.
+        This is the beginning of our forever. 🌸✨
+      </p>
+
+      <button class="btn backBtn" id="backBtn">← Back</button>
+    </div>
+  </section>
+
+  <script>
+    /* --------- HEARTS: create flying hearts continuously --------- */
+    const heartsLayer = document.getElementById("heartsLayer");
+    const heartChars = ["❤","💖","💗","💘","💝","💕","💓","💞"];
+
+    function spawnHeart(){
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+
+      const left = Math.random() * 100;
+      const duration = 6 + Math.random() * 7; // 6-13s
+      const drift = (Math.random() * 140 - 70) + "px"; // -70..70
+      const scale = (0.7 + Math.random() * 1.1).toFixed(2); // 0.7..1.8
+      const rot = (Math.random() * 180 - 90) + "deg";
+
+      h.style.left = left + "vw";
+      h.style.animationDuration = duration + "s";
+      h.style.setProperty("--drift", drift);
+      h.style.setProperty("--scale", scale);
+      h.style.setProperty("--rot", rot);
+
+      heartsLayer.appendChild(h);
+
+      // remove after animation
+      setTimeout(() => h.remove(), duration * 1000);
+    }
+
+    // start hearts
+    for(let i=0;i<10;i++) setTimeout(spawnHeart, i*200);
+    setInterval(spawnHeart, 220);
+
+    /* --------- NO BUTTON RUNAWAY LOGIC --------- */
+    const noBtn = document.getElementById("noBtn");
+    const playground = document.getElementById("playground");
+
+    function moveNoButton(){
+      const pad = 10;
+      const pg = playground.getBoundingClientRect();
+      const btn = noBtn.getBoundingClientRect();
+
+      const maxX = pg.width - btn.width - pad;
+      const maxY = pg.height - btn.height - pad;
+
+      const x = pad + Math.random() * Math.max(10, maxX - pad);
+      const y = pad + Math.random() * Math.max(10, maxY - pad);
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top  = y + "px";
+    }
+
+    // Desktop hover
+    noBtn.addEventListener("mouseenter", moveNoButton);
+
+    // Mobile touch: when finger comes near / tries to tap
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault(); // stop click
+      moveNoButton();
+    }, {passive:false});
+
+    // Also move if they touch inside playground area (fun effect)
+    playground.addEventListener("touchstart", () => {
+      // small chance to move even if they touch around
+      if (Math.random() < 0.5) moveNoButton();
+    }, {passive:true});
+
+    /* --------- YES -> show message "page" --------- */
+    const yesBtn = document.getElementById("yesBtn");
+    const yesPage = document.getElementById("yesPage");
+    const mainScreen = document.getElementById("mainScreen");
+    const backBtn = document.getElementById("backBtn");
+
+    function openYesPage(){
+      mainScreen.style.display = "none";
+      yesPage.classList.add("show");
+      yesPage.setAttribute("aria-hidden", "false");
+      // little celebration
+      for(let i=0;i<18;i++) setTimeout(spawnHeart, i*60);
+    }
+
+    function goBack(){
+      yesPage.classList.remove("show");
+      yesPage.setAttribute("aria-hidden", "true");
+      mainScreen.style.display = "";
+    }
+
+    yesBtn.addEventListener("click", openYesPage);
+    backBtn.addEventListener("click", goBack);
+
+    /* --------- OPTIONAL: change photo easily ---------
+       If you want to use local photo, put image file in same repo and set:
+       src="asha.jpg"
+    -------------------------------------------------- */
+  </script>
+</body>
+</html>
